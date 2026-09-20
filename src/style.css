@@ -2,13 +2,62 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #eef1f5;
+  --texto: #1f2933;
+  --texto-suave: #5c6773;
+  --cartao-bg: #fff;
+  --cartao-sombra: rgba(0, 0, 0, 0.12);
+  --header-bg: #14375e;
+  --header-texto: #fff;
+  --header-sub: #cfd9e5;
+  --primaria: #1d6f42;
+  --primaria-hover: #175934;
+  --borda: #ccd4dd;
+  --opcao-hover-bg: #f4f7fa;
+  --certo-borda: #1d6f42;
+  --certo-bg: #e8f5ed;
+  --errado-borda: #b3261e;
+  --errado-bg: #fbeae9;
+  --media-bg: #fdf3e0;
+  --media-texto: #8a5a00;
+  --tema-badge-bg: #e4ecf5;
+  --tema-badge-texto: #14375e;
+  --rodape-texto: #6b7785;
+}
+
+:root[data-tema='escuro'] {
+  --bg: #10161f;
+  --texto: #e6ebf1;
+  --texto-suave: #9aa7b5;
+  --cartao-bg: #1a2330;
+  --cartao-sombra: rgba(0, 0, 0, 0.5);
+  --header-bg: #0b1c30;
+  --header-texto: #fff;
+  --header-sub: #9fb3c8;
+  --primaria: #2f9e63;
+  --primaria-hover: #278253;
+  --borda: #33404e;
+  --opcao-hover-bg: #232f3d;
+  --certo-borda: #2f9e63;
+  --certo-bg: rgba(47, 158, 99, 0.18);
+  --errado-borda: #e0554a;
+  --errado-bg: rgba(224, 85, 74, 0.18);
+  --media-bg: rgba(217, 154, 43, 0.15);
+  --media-texto: #d99a2b;
+  --tema-badge-bg: #1f3450;
+  --tema-badge-texto: #a9c6e8;
+  --rodape-texto: #7c8896;
+}
+
 body {
   margin: 0;
-  background-color: #eef1f5;
-  color: #1f2933;
+  background-color: var(--bg);
+  color: var(--texto);
   font-family: "Segoe UI", Arial, Helvetica, sans-serif;
   font-size: 17px;
   line-height: 1.5;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3 {
@@ -21,45 +70,53 @@ button {
   cursor: pointer;
 }
 
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #4d9fe0;
+  outline-offset: 2px;
+}
+
 .container {
   max-width: 680px;
   margin: 0 auto;
   padding: 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
 }
 
 .container > header {
   position: relative;
   text-align: center;
-  padding: 18px 10px;
+  padding: 18px 54px;
   margin-bottom: 18px;
-  background-color: #14375e;
-  color: #fff;
+  background-color: var(--header-bg);
+  color: var(--header-texto);
   border-radius: 8px;
 }
 
 .container > header h1 {
-  font-size: 28px;
+  font-size: clamp(22px, 6vw, 28px);
   letter-spacing: 1px;
 }
 
 .container > header p {
   margin: 0;
   font-size: 15px;
-  color: #cfd9e5;
+  color: var(--header-sub);
 }
 
 .container > footer {
   margin-top: 24px;
   text-align: center;
   font-size: 13px;
-  color: #6b7785;
+  color: var(--rodape-texto);
 }
 
 .cartao {
-  background-color: #fff;
+  background-color: var(--cartao-bg);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 4px var(--cartao-sombra);
 }
 
 .botao-principal {
@@ -67,13 +124,15 @@ button {
   padding: 14px;
   border: none;
   border-radius: 6px;
-  background-color: #1d6f42;
+  background-color: var(--primaria);
   color: #fff;
   font-weight: bold;
 }
 
-.botao-principal:hover {
-  background-color: #175934;
+@media (hover: hover) and (pointer: fine) {
+  .botao-principal:hover {
+    background-color: var(--primaria-hover);
+  }
 }
 
 @media (max-width: 480px) {
@@ -85,8 +144,32 @@ button {
     padding: 10px;
   }
 
+  .container > header {
+    padding: 16px 48px;
+  }
+
   .cartao {
     padding: 15px;
+  }
+}
+
+/* celular deitado: telas baixas, reduz respiro vertical pra caber sem rolagem excessiva */
+@media (max-height: 480px) and (orientation: landscape) {
+  .container > header {
+    padding: 10px 48px;
+    margin-bottom: 10px;
+  }
+
+  .container > header h1 {
+    font-size: 20px;
+  }
+
+  .container > header p {
+    display: none;
+  }
+
+  .cartao {
+    padding: 14px;
   }
 }
 
@@ -107,4 +190,36 @@ button {
 .troca-leave-to {
   opacity: 0;
   transform: translateX(-24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* na hora de imprimir o certificado, esconde o resto e ignora o modo escuro */
+@media print {
+  .no-imprimir {
+    display: none !important;
+  }
+
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .cartao {
+    box-shadow: none;
+  }
+
+  .certificado {
+    border-color: #14375e !important;
+  }
+
+  .certificado-nome {
+    color: #14375e !important;
+  }
 }

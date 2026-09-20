@@ -9,6 +9,21 @@ exibida a pontuação com uma orientação de acordo com o percentual de acerto.
 
 Projeto desenvolvido como atividade prática de extensão universitária.
 
+## Funcionalidades
+
+- Perguntas com feedback imediato e explicação de cada resposta
+- Desempenho separado por tema (phishing, engenharia social, senhas) na tela final
+- Revisão pergunta a pergunta, com a resposta certa marcada em cada uma
+- Certificado de participação com nome (opcional) e data, pronto pra imprimir ou
+  salvar em PDF pelo próprio navegador
+- Compartilhar o resultado (usa o menu de compartilhamento do celular quando
+  disponível, ou copia o texto na área de transferência)
+- Melhor resultado salvo no aparelho, pra comparar em novas tentativas
+- Modo escuro (segue a preferência do sistema, com opção de trocar manualmente)
+- Sons de acerto/erro e animações de transição entre as telas
+- Atalhos de teclado no computador (teclas 1 a 4 e Enter)
+- Layout responsivo, testado em celular (retrato e paisagem) e desktop
+
 ## Tecnologias
 
 - Vue 3 (Composition API, `<script setup>`)
@@ -16,10 +31,12 @@ Projeto desenvolvido como atividade prática de extensão universitária.
 - CSS puro, sem framework de interface
 
 Não há backend: as perguntas ficam no arquivo `src/perguntas.json` e todo o resto roda
-no navegador. A tela foi feita para funcionar também no celular.
+no navegador, inclusive o que é salvo (melhor resultado e preferência de tema ficam no
+`localStorage` do próprio aparelho).
 
-Os sons de acerto e erro são gerados pelo próprio navegador, sem arquivos de áudio, e
-podem ser desligados no ícone no canto superior direito.
+Os sons de acerto/erro são gerados pelo navegador via Web Audio, sem arquivos de áudio,
+e podem ser desligados no ícone de alto-falante no cabeçalho. O confete que aparece
+quando o aproveitamento é alto usa `canvas`, também sem bibliotecas externas.
 
 ## Como rodar
 

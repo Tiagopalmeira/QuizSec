@@ -1,9 +1,17 @@
 <script setup>
+import { ref } from 'vue'
+
 defineProps({
   total: Number
 })
 
-defineEmits(['comecar'])
+const emit = defineEmits(['comecar'])
+
+const nome = ref('')
+
+function iniciar() {
+  emit('comecar', nome.value.trim())
+}
 </script>
 
 <template>
@@ -19,12 +27,25 @@ defineEmits(['comecar'])
     <ul class="instrucoes">
       <li>Escolha uma alternativa por pergunta.</li>
       <li>Depois de responder você vê na hora se acertou e o motivo.</li>
-      <li>No final aparece a sua pontuação. Não vale nota, o objetivo é aprender.</li>
+      <li>No final aparece a sua pontuação e um certificado de participação.</li>
     </ul>
 
     <p class="tempo">Tempo estimado: 5 minutos.</p>
 
-    <button class="botao-principal" @click="$emit('comecar')">Começar o quiz</button>
+    <div class="campo-nome">
+      <label for="nome">Seu nome (opcional, aparece no certificado)</label>
+      <input
+        id="nome"
+        v-model="nome"
+        type="text"
+        placeholder="Ex.: Maria da Silva"
+        maxlength="60"
+        autocomplete="name"
+        @keyup.enter="iniciar"
+      />
+    </div>
+
+    <button class="botao-principal" @click="iniciar">Começar o quiz</button>
   </div>
 </template>
 
@@ -40,7 +61,33 @@ defineEmits(['comecar'])
 
 .tempo {
   font-size: 15px;
-  color: #5c6773;
+  color: var(--texto-suave);
   margin-bottom: 20px;
+}
+
+.campo-nome {
+  margin-bottom: 20px;
+}
+
+.campo-nome label {
+  display: block;
+  font-size: 14px;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.campo-nome input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid var(--borda);
+  border-radius: 6px;
+  background-color: var(--cartao-bg);
+  color: var(--texto);
+}
+
+.campo-nome input:focus {
+  outline: none;
+  border-color: var(--primaria);
 }
 </style>

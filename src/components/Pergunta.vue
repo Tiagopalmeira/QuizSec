@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { tocar } from '../som'
 
 const props = defineProps({
@@ -22,8 +22,9 @@ function escolher(i) {
   if (respondeu.value) return
 
   escolhida.value = i
-  tocar(i === props.pergunta.correta ? 'acerto' : 'erro')
-  emit('responder', i === props.pergunta.correta)
+  const foiCerto = i === props.pergunta.correta
+  tocar(foiCerto ? 'acerto' : 'erro')
+  emit('responder', { acertou: foiCerto, escolhida: i })
 }
 
 function classe(i) {
@@ -32,6 +33,25 @@ function classe(i) {
   if (i === escolhida.value) return 'errada'
   return 'apagada'
 }
+
+// atalhos de teclado pra quem esta usando computador: 1-4 escolhe, Enter avanca
+function teclado(e) {
+  if (!respondeu.value) {
+    const posicao = Number(e.key) - 1
+    if (posicao >= 0 && posicao < props.pergunta.opcoes.length) {
+      escolher(posicao)
+    }
+    return
+  }
+
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault()
+    emit('proxima')
+  }
+}
+
+onMounted(() => window.addEventListener('keydown', teclado))
+onUnmounted(() => window.removeEventListener('keydown', teclado))
 </script>
 
 <template>
@@ -45,7 +65,7 @@ function classe(i) {
       <div class="barra-cheia" :style="{ width: progresso + '%' }"></div>
     </div>
 
-    <span class="tema">{{ pergunta.tema }}</span>
+    <span class="tema-badge">{{ pergunta.tema }}</span>
     <h2 class="enunciado">{{ pergunta.pergunta }}</h2>
 
     <ul class="opcoes">
@@ -57,9 +77,11 @@ function classe(i) {
       </li>
     </ul>
 
+    <p class="dica-teclado">No computador: teclas 1 a 4 para responder e Enter para avançar.</p>
+
     <Transition name="surge">
       <div v-if="respondeu">
-        <div :class="['feedback', acertou ? 'ok' : 'nao-ok']">
+        <div :class="['feedback', acertou ? 'ok' : 'nao-ok']" aria-live="polite">
           <strong>{{ acertou ? '✔ Você acertou!' : '✖ Resposta incorreta.' }}</strong>
           <p>{{ pergunta.explicacao }}</p>
         </div>
@@ -77,13 +99,13 @@ function classe(i) {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #5c6773;
+  color: var(--texto-suave);
   margin-bottom: 6px;
 }
 
 .barra {
   height: 6px;
-  background-color: #dde3ea;
+  background-color: var(--borda);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 18px;
@@ -91,14 +113,14 @@ function classe(i) {
 
 .barra-cheia {
   height: 100%;
-  background-color: #14375e;
+  background-color: var(--header-bg);
   transition: width 0.4s ease;
 }
 
-.tema {
+.tema-badge {
   display: inline-block;
-  background-color: #e4ecf5;
-  color: #14375e;
+  background-color: var(--tema-badge-bg);
+  color: var(--tema-badge-texto);
   font-size: 13px;
   padding: 3px 9px;
   border-radius: 10px;
@@ -135,16 +157,18 @@ function classe(i) {
   width: 100%;
   text-align: left;
   padding: 12px;
-  border: 2px solid #ccd4dd;
+  border: 2px solid var(--borda);
   border-radius: 6px;
-  background-color: #fff;
-  color: #1f2933;
+  background-color: var(--cartao-bg);
+  color: var(--texto);
   transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
 }
 
-.opcao:hover:enabled {
-  border-color: #14375e;
-  background-color: #f4f7fa;
+@media (hover: hover) and (pointer: fine) {
+  .opcao:hover:enabled {
+    border-color: var(--header-bg);
+    background-color: var(--opcao-hover-bg);
+  }
 }
 
 .opcao:active:enabled {
@@ -158,7 +182,7 @@ function classe(i) {
   line-height: 26px;
   text-align: center;
   border-radius: 50%;
-  background-color: #e4ecf5;
+  background-color: var(--tema-badge-bg);
   font-size: 14px;
   font-weight: bold;
 }
@@ -168,24 +192,24 @@ function classe(i) {
 }
 
 .certa {
-  border-color: #1d6f42;
-  background-color: #e8f5ed;
+  border-color: var(--certo-borda);
+  background-color: var(--certo-bg);
   animation: pulso 0.5s ease;
 }
 
 .certa .letra {
-  background-color: #1d6f42;
+  background-color: var(--certo-borda);
   color: #fff;
 }
 
 .errada {
-  border-color: #b3261e;
-  background-color: #fbeae9;
+  border-color: var(--errado-borda);
+  background-color: var(--errado-bg);
   animation: tremor 0.4s ease;
 }
 
 .errada .letra {
-  background-color: #b3261e;
+  background-color: var(--errado-borda);
   color: #fff;
 }
 
@@ -214,6 +238,19 @@ function classe(i) {
   }
 }
 
+.dica-teclado {
+  display: none;
+  font-size: 13px;
+  color: var(--texto-suave);
+  margin: -8px 0 16px 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dica-teclado {
+    display: block;
+  }
+}
+
 .feedback {
   border-left: 5px solid;
   padding: 12px 14px;
@@ -227,13 +264,13 @@ function classe(i) {
 }
 
 .ok {
-  border-color: #1d6f42;
-  background-color: #e8f5ed;
+  border-color: var(--certo-borda);
+  background-color: var(--certo-bg);
 }
 
 .nao-ok {
-  border-color: #b3261e;
-  background-color: #fbeae9;
+  border-color: var(--errado-borda);
+  background-color: var(--errado-bg);
 }
 
 .surge-enter-active {
