@@ -82,7 +82,7 @@ onUnmounted(() => window.removeEventListener('keydown', teclado))
     <Transition name="surge">
       <div v-if="respondeu">
         <div :class="['feedback', acertou ? 'ok' : 'nao-ok']" aria-live="polite">
-          <strong>{{ acertou ? '✔ Você acertou!' : '✖ Resposta incorreta.' }}</strong>
+          <strong>{{ acertou ? 'Você acertou!' : 'Resposta incorreta.' }}</strong>
           <p>{{ pergunta.explicacao }}</p>
         </div>
 

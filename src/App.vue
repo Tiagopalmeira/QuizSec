@@ -56,20 +56,16 @@ function voltarInicio() {
 <template>
   <div class="container">
     <header class="no-imprimir">
-      <div class="controles">
-        <button
-          class="icone"
-          :title="tema === 'escuro' ? 'Ativar modo claro' : 'Ativar modo escuro'"
-          @click="alternarTema()"
-        >
-          {{ tema === 'escuro' ? '☀️' : '🌙' }}
-        </button>
-        <button class="icone" :title="mudo ? 'Ativar som' : 'Desativar som'" @click="mudo = !mudo">
-          {{ mudo ? '🔇' : '🔊' }}
-        </button>
-      </div>
       <h1>QuizzSec</h1>
       <p>Quiz de conscientização em segurança da informação</p>
+      <div class="controles">
+        <button class="botao-modo" @click="alternarTema()">
+          {{ tema === 'escuro' ? 'Modo claro' : 'Modo escuro' }}
+        </button>
+        <button class="botao-modo" @click="mudo = !mudo">
+          {{ mudo ? 'Ativar som' : 'Desativar som' }}
+        </button>
+      </div>
     </header>
 
     <Transition name="troca" mode="out-in">
@@ -104,31 +100,29 @@ function voltarInicio() {
 
 <style scoped>
 .controles {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   display: flex;
-  gap: 2px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.icone {
-  border: none;
+.botao-modo {
+  border: 1px solid rgba(255, 255, 255, 0.4);
   background: none;
-  font-size: 19px;
-  line-height: 1;
-  padding: 8px;
-  opacity: 0.85;
-  border-radius: 50%;
+  color: var(--header-texto);
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
 }
 
-.icone:active {
-  opacity: 1;
+.botao-modo:active {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .icone:hover {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.12);
+  .botao-modo:hover {
+    background-color: rgba(255, 255, 255, 0.15);
   }
 }
 </style>

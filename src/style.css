@@ -85,9 +85,8 @@ input:focus-visible {
 }
 
 .container > header {
-  position: relative;
   text-align: center;
-  padding: 18px 54px;
+  padding: 18px 16px;
   margin-bottom: 18px;
   background-color: var(--header-bg);
   color: var(--header-texto);
@@ -145,7 +144,7 @@ input:focus-visible {
   }
 
   .container > header {
-    padding: 16px 48px;
+    padding: 14px 12px;
   }
 
   .cartao {
@@ -156,7 +155,7 @@ input:focus-visible {
 /* celular deitado: telas baixas, reduz respiro vertical pra caber sem rolagem excessiva */
 @media (max-height: 480px) and (orientation: landscape) {
   .container > header {
-    padding: 10px 48px;
+    padding: 8px 12px;
     margin-bottom: 10px;
   }
 

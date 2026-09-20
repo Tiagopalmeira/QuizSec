@@ -200,7 +200,7 @@ onUnmounted(() => clearInterval(contador))
       <ul class="lista-revisao">
         <li v-for="(r, i) in respostas" :key="i" class="item-revisao">
           <button class="cabecalho-revisao" @click="alternarPergunta(i)">
-            <span :class="['selo', r.correta ? 'selo-ok' : 'selo-erro']">{{ r.correta ? '✔' : '✖' }}</span>
+            <span :class="['selo', r.correta ? 'selo-ok' : 'selo-erro']">{{ r.correta ? 'Certo' : 'Errado' }}</span>
             <span class="texto-revisao">{{ i + 1 }}. {{ r.pergunta.pergunta }}</span>
             <span class="seta" :class="{ aberta: abertas.has(i) }">▾</span>
           </button>
@@ -394,13 +394,12 @@ section {
 
 .selo {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  border-radius: 50%;
-  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
   color: #fff;
+  white-space: nowrap;
 }
 
 .selo-ok {
