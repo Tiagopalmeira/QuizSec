@@ -1,5 +1,6 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { tocar } from '../som'
 
 const props = defineProps({
   pontos: Number,
@@ -8,7 +9,11 @@ const props = defineProps({
 
 defineEmits(['reiniciar'])
 
+const exibido = ref(0)
+let contador
+
 const percentual = computed(() => Math.round((props.pontos / props.total) * 100))
+const percentualExibido = computed(() => Math.round((exibido.value / props.total) * 100))
 
 const faixa = computed(() => {
   if (percentual.value >= 80) return 'alta'
@@ -30,6 +35,21 @@ const mensagens = {
     texto: 'Boa parte das situações apresentadas aqui acontece com frequência em empresas. Refaça o quiz com calma, lendo as explicações, e procure o responsável pela TI em caso de dúvida.'
   }
 }
+
+onMounted(() => {
+  tocar('fim')
+
+  // sobe a pontuacao aos poucos em vez de mostrar o numero final de uma vez
+  contador = setInterval(() => {
+    if (exibido.value >= props.pontos) {
+      clearInterval(contador)
+      return
+    }
+    exibido.value++
+  }, 130)
+})
+
+onUnmounted(() => clearInterval(contador))
 </script>
 
 <template>
@@ -37,8 +57,8 @@ const mensagens = {
     <h2>Quiz finalizado</h2>
 
     <div :class="['placar', faixa]">
-      <span class="numero">{{ pontos }} de {{ total }}</span>
-      <span class="porcento">{{ percentual }}% de acerto</span>
+      <span class="numero">{{ exibido }} de {{ total }}</span>
+      <span class="porcento">{{ percentualExibido }}% de acerto</span>
     </div>
 
     <h3>{{ mensagens[faixa].titulo }}</h3>
@@ -63,6 +83,17 @@ const mensagens = {
   padding: 18px;
   border-radius: 6px;
   margin: 16px 0 20px 0;
+  animation: surgir 0.5s ease both;
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  70% {
+    transform: scale(1.04);
+  }
 }
 
 .numero {

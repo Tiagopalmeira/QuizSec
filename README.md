@@ -18,6 +18,9 @@ Projeto desenvolvido como atividade prática de extensão universitária.
 Não há backend: as perguntas ficam no arquivo `src/perguntas.json` e todo o resto roda
 no navegador. A tela foi feita para funcionar também no celular.
 
+Os sons de acerto e erro são gerados pelo próprio navegador, sem arquivos de áudio, e
+podem ser desligados no ícone no canto superior direito.
+
 ## Como rodar
 
 Precisa ter o Node.js instalado (versão 18 ou superior).

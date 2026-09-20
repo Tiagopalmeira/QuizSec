@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { tocar } from '../som'
 
 const props = defineProps({
   pergunta: Object,
@@ -21,6 +22,7 @@ function escolher(i) {
   if (respondeu.value) return
 
   escolhida.value = i
+  tocar(i === props.pergunta.correta ? 'acerto' : 'erro')
   emit('responder', i === props.pergunta.correta)
 }
 
@@ -47,7 +49,7 @@ function classe(i) {
     <h2 class="enunciado">{{ pergunta.pergunta }}</h2>
 
     <ul class="opcoes">
-      <li v-for="(opcao, i) in pergunta.opcoes" :key="i">
+      <li v-for="(opcao, i) in pergunta.opcoes" :key="i" :style="{ animationDelay: i * 0.07 + 's' }">
         <button :class="['opcao', classe(i)]" :disabled="respondeu" @click="escolher(i)">
           <span class="letra">{{ letras[i] }}</span>
           {{ opcao }}
@@ -55,14 +57,18 @@ function classe(i) {
       </li>
     </ul>
 
-    <div v-if="respondeu" :class="['feedback', acertou ? 'ok' : 'nao-ok']">
-      <strong>{{ acertou ? 'Você acertou!' : 'Resposta incorreta.' }}</strong>
-      <p>{{ pergunta.explicacao }}</p>
-    </div>
+    <Transition name="surge">
+      <div v-if="respondeu">
+        <div :class="['feedback', acertou ? 'ok' : 'nao-ok']">
+          <strong>{{ acertou ? '✔ Você acertou!' : '✖ Resposta incorreta.' }}</strong>
+          <p>{{ pergunta.explicacao }}</p>
+        </div>
 
-    <button v-if="respondeu" class="botao-principal" @click="emit('proxima')">
-      {{ numero === total ? 'Ver resultado' : 'Próxima pergunta' }}
-    </button>
+        <button class="botao-principal" @click="emit('proxima')">
+          {{ numero === total ? 'Ver resultado' : 'Próxima pergunta' }}
+        </button>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -86,7 +92,7 @@ function classe(i) {
 .barra-cheia {
   height: 100%;
   background-color: #14375e;
-  transition: width 0.3s;
+  transition: width 0.4s ease;
 }
 
 .tema {
@@ -112,6 +118,14 @@ function classe(i) {
 
 .opcoes li {
   margin-bottom: 10px;
+  animation: entrada 0.35s ease both;
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
 .opcao {
@@ -125,11 +139,16 @@ function classe(i) {
   border-radius: 6px;
   background-color: #fff;
   color: #1f2933;
+  transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
 }
 
 .opcao:hover:enabled {
   border-color: #14375e;
   background-color: #f4f7fa;
+}
+
+.opcao:active:enabled {
+  transform: scale(0.99);
 }
 
 .letra {
@@ -151,15 +170,48 @@ function classe(i) {
 .certa {
   border-color: #1d6f42;
   background-color: #e8f5ed;
+  animation: pulso 0.5s ease;
+}
+
+.certa .letra {
+  background-color: #1d6f42;
+  color: #fff;
 }
 
 .errada {
   border-color: #b3261e;
   background-color: #fbeae9;
+  animation: tremor 0.4s ease;
+}
+
+.errada .letra {
+  background-color: #b3261e;
+  color: #fff;
 }
 
 .apagada {
-  opacity: 0.55;
+  opacity: 0.5;
+}
+
+@keyframes pulso {
+  40% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes tremor {
+  20% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .feedback {
@@ -182,5 +234,14 @@ function classe(i) {
 .nao-ok {
   border-color: #b3261e;
   background-color: #fbeae9;
+}
+
+.surge-enter-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.surge-enter-from {
+  opacity: 0;
+  transform: translateY(-12px);
 }
 </style>
