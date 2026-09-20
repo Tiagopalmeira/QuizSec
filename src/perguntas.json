@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "tema": "Phishing",
+    "pergunta": "Chega um e-mail com o assunto \"Sua conta será bloqueada em 24 horas\" pedindo que você confirme seus dados em um link. O remetente é atendimento@bancoo-brasil.com. Qual a melhor atitude?",
+    "opcoes": [
+      "Clicar no link e verificar se a página é parecida com a do banco",
+      "Responder o e-mail perguntando se a mensagem é verdadeira",
+      "Não clicar, excluir a mensagem e, em caso de dúvida, procurar o banco pelo aplicativo ou telefone oficial",
+      "Encaminhar para os colegas para avisar sobre o bloqueio"
+    ],
+    "correta": 2,
+    "explicacao": "O domínio está escrito errado (bancoo) e a mensagem usa urgência para fazer você agir sem pensar. Responder só confirma que o seu endereço está ativo. A checagem deve ser feita sempre por um canal oficial que você já conhece."
+  },
+  {
+    "id": 2,
+    "tema": "Phishing",
+    "pergunta": "Entre os itens abaixo, qual é o sinal MAIS confiável de que um e-mail é falso?",
+    "opcoes": [
+      "A mensagem tem erros de português",
+      "O domínio do remetente é diferente do domínio oficial da empresa",
+      "A mensagem chegou fora do horário comercial",
+      "A mensagem veio com um anexo em PDF"
+    ],
+    "correta": 1,
+    "explicacao": "Erros de português ajudam, mas hoje muitos golpes são bem escritos. Horário e anexo aparecem em e-mails legítimos o tempo todo. O domínio do remetente é o único item da lista que pode ser conferido de forma objetiva."
+  },
+  {
+    "id": 3,
+    "tema": "Engenharia social",
+    "pergunta": "Uma pessoa liga dizendo ser do suporte de TI e pede sua senha para \"aplicar uma atualização urgente no sistema\". Como agir?",
+    "opcoes": [
+      "Informar a senha, já que o pedido veio do setor de TI",
+      "Informar apenas parte da senha, por segurança",
+      "Não informar a senha e confirmar a ligação com o TI por um contato que você já conhece",
+      "Trocar a senha na hora e informar a nova"
+    ],
+    "correta": 2,
+    "explicacao": "Equipe de TI legítima não precisa da sua senha para trabalhar. O golpe combina autoridade com urgência. A confirmação tem que ser feita por um número que você já tem, nunca pelo número que ligou."
+  },
+  {
+    "id": 4,
+    "tema": "Senhas",
+    "pergunta": "Qual destas senhas é a mais segura para acessar o sistema da empresa?",
+    "opcoes": [
+      "Empresa@2024",
+      "M@ria1985",
+      "cavalo-vermelho-92-praia",
+      "Abc123456!"
+    ],
+    "correta": 2,
+    "explicacao": "O tamanho da senha pesa mais do que a quantidade de símbolos. Uma frase com palavras sem ligação é difícil de quebrar e fácil de lembrar. As outras três seguem padrões previsíveis (nome da empresa, nome próprio com ano, sequência de teclado) que já estão em listas usadas por atacantes."
+  },
+  {
+    "id": 5,
+    "tema": "Senhas",
+    "pergunta": "Por que não se deve usar a mesma senha no e-mail do trabalho e nas redes sociais?",
+    "opcoes": [
+      "Porque o sistema da empresa não aceita senhas repetidas",
+      "Porque, se um dos serviços sofrer vazamento, o invasor testa a mesma senha nos outros",
+      "Porque a senha expira mais rápido quando é usada em vários lugares",
+      "Porque o login fica mais lento"
+    ],
+    "correta": 1,
+    "explicacao": "Senhas vazadas de um site são testadas automaticamente em outros serviços. Basta um site fora do seu controle ser invadido para que o acesso da empresa fique exposto."
+  },
+  {
+    "id": 6,
+    "tema": "Boas práticas",
+    "pergunta": "Você encontra um pendrive sem identificação no estacionamento da empresa. O procedimento correto é:",
+    "opcoes": [
+      "Conectar no seu computador para descobrir de quem é e devolver",
+      "Conectar em um computador que não é usado para trabalho",
+      "Entregar ao responsável pela TI sem conectar em nenhum equipamento",
+      "Formatar o pendrive e passar a usá-lo"
+    ],
+    "correta": 2,
+    "explicacao": "Pendrive abandonado é uma isca conhecida. Ele pode rodar um programa sozinho ou se apresentar como teclado e digitar comandos no computador. Nem o computador \"que não é do trabalho\" está seguro, porque costuma estar na mesma rede."
+  },
+  {
+    "id": 7,
+    "tema": "Engenharia social",
+    "pergunta": "Você recebe um SMS com um código de verificação que não solicitou e, logo em seguida, alguém liga pedindo esse código. O que está acontecendo?",
+    "opcoes": [
+      "O sistema apresentou falha e reenviou o código",
+      "Alguém já tem a sua senha e precisa do código para concluir o acesso à sua conta",
+      "O código precisa ser repetido para cancelar o acesso",
+      "O código expirou e por isso a ligação foi feita"
+    ],
+    "correta": 1,
+    "explicacao": "O código só é enviado quando alguém tenta entrar na conta. Se você não pediu, a senha já está com outra pessoa e falta apenas o segundo fator. Não repasse o código e troque a senha imediatamente."
+  },
+  {
+    "id": 8,
+    "tema": "Phishing",
+    "pergunta": "Antes de clicar em um link recebido por e-mail ou WhatsApp, a verificação mais útil é:",
+    "opcoes": [
+      "Conferir se o texto do link começa com https",
+      "Passar o mouse sobre o link (ou segurar o dedo, no celular) e ver o endereço real de destino",
+      "Verificar se o link é curto",
+      "Abrir o link em uma aba anônima"
+    ],
+    "correta": 1,
+    "explicacao": "O texto que aparece na tela pode ser completamente diferente do endereço real. O https e o cadeado só indicam que a conexão é criptografada, e sites falsos também têm isso. A aba anônima não impede que a página roube seus dados."
+  },
+  {
+    "id": 9,
+    "tema": "Boas práticas",
+    "pergunta": "Um colega diz que o login dele está bloqueado e pede o seu usuário emprestado para terminar um relatório urgente. Qual a resposta correta?",
+    "opcoes": [
+      "Emprestar, já que é um colega de confiança",
+      "Emprestar e trocar a senha no dia seguinte",
+      "Não emprestar e orientar que ele abra um chamado no TI",
+      "Digitar a senha você mesmo e deixar ele usar o computador"
+    ],
+    "correta": 2,
+    "explicacao": "Tudo que for feito com o seu usuário fica registrado no seu nome, inclusive erros e acessos indevidos. Além disso, esse pedido é um pretexto bastante usado por quem quer acesso ao sistema sem passar pelo controle do TI."
+  },
+  {
+    "id": 10,
+    "tema": "Engenharia social",
+    "pergunta": "Chega uma mensagem no WhatsApp, de um número desconhecido com a foto do diretor, pedindo o pagamento urgente de um boleto fora do procedimento normal da empresa. O que fazer?",
+    "opcoes": [
+      "Pagar, porque o pedido veio da direção",
+      "Pagar e comunicar o financeiro depois",
+      "Confirmar pessoalmente ou pelo telefone que você já usa com o diretor antes de qualquer pagamento",
+      "Responder no próprio WhatsApp pedindo a confirmação do pedido"
+    ],
+    "correta": 2,
+    "explicacao": "É a fraude do falso superior, muito comum em empresas pequenas. Número novo, urgência e pedido fora do procedimento são os três sinais. Pedir confirmação no mesmo WhatsApp não resolve, porque quem responde é o próprio golpista."
+  }
+]
